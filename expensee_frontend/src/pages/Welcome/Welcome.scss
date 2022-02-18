@@ -1,0 +1,16 @@
+.Welcome{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    h1{
+        padding: 90px 0 150px 0;
+        font-size: $h1FontSize;
+        font-weight: 400;
+    }
+    a{
+        margin: 10px 0;
+    }
+    article{
+        margin-top: 127px;
+    }
+}

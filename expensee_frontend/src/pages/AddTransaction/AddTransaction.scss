@@ -1,0 +1,37 @@
+.AddTransaction{
+    padding:$sidePadding;
+    padding-top: 150px;
+    background-color:$backgroundColor;
+    h2 {
+        width: 90%;
+        margin-bottom: 30px;
+    }
+    form {
+        margin: auto auto;
+
+    }
+    form > * {
+        display:block;
+        margin: auto auto;
+        margin-bottom: 10px;
+        
+    }
+    .transactionInput{
+        text-align: left;
+        color: $sontigesColor;
+        padding-left: 15px;
+        background-color:$darkerInput;
+    }
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;       /* Remove default arrow */
+     }
+     select * {
+         background-color:$backgroundColor;
+         color:white;
+     }
+}
+.AddTransaction > * {
+    margin : auto auto;
+}

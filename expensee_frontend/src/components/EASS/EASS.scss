@@ -1,0 +1,14 @@
+.EASS {
+    padding-bottom: 10px;
+    .transactionDetails {
+        background-color: $lighterBlue;
+        display:flex;
+        justify-content: space-between;
+        border-bottom: $backgroundColor 1px solid;
+        border-top: $backgroundColor 1px solid;
+        padding: 15px 10%;
+    }
+    .details {
+        width: 90%;
+    }
+}

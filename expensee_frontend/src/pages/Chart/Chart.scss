@@ -1,0 +1,54 @@
+.Chart{
+    padding:$sidePadding; 
+    margin-top: 40px;
+    background-color: $backgroundColor;
+    .colorDefinitions{
+        display: flex;
+        justify-content: space-around;
+        font-size: 10px;
+        width: 90%;
+        margin-bottom: 70px;
+        .Ered {
+            background-color: #FF009D;
+        }
+        .Ablue {
+            background-color: $ausgebenColor;
+        }
+        .Syellow {
+            background-color: $sparenColor;
+        }
+        .Sgray {
+            background-color: $sontigesColor;
+        }
+    }
+    div {
+        margin: auto auto;
+    }
+
+    .littleCircle {
+        padding : 5px;
+        border-radius: 5px;
+        background-color: red;
+    }
+    .ChartComponents{
+        width:250px;
+        margin-bottom: 40px;
+        margin-top: 40px;
+        position:relative;
+        .centerText {
+            background-color: white;
+            width: 130px;
+            height: 130px;
+            border-radius: 100px;
+            color: black;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size: 25px ;
+            position:absolute;
+            $top-right:60px;
+            top:$top-right;
+            right:$top-right;
+        }
+    }
+}
