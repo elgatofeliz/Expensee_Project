@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv")
+
 const { getUserByEmail } = require("../db_access/user-dao.js")
 const { passwordHash } = require("../middleware/passwordHash.js")
+
+dotenv.config()
 
 const generateToken = (user) => {
     const NOW = Date.now() / 1000
@@ -27,6 +31,12 @@ async function loginUserService({ email, password }) {
     if (!passwordIsCorrect) {
         throw new Error("Email and password do not match.")
     }
+    console.log(foundUser)
+    if (!foundUser.isAuth) {
+        console.log("user aint authenticated")
+        return {}
+    }
+    console.log("user is Authenticated")
     const token = generateToken(foundUser)
     return token
 }

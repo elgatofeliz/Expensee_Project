@@ -1,12 +1,17 @@
 .Login{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    text-align: center;
     h1{
         padding: 90px 0 50px 0;
         font-size: $h1FontSize;
         font-weight: 400;
     }
+}
+
+.LoginForm {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
     p{
         padding-bottom: 25px;
     }
@@ -16,4 +21,8 @@
     article{
         margin-top: 110px;
     }
+}
+
+.AuthForm{
+    text-align: center;
 }

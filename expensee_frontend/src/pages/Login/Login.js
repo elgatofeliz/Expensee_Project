@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { submitUserForm } from '../../api/postUserApi.js'
 const { submitForm } = require("../../api/postUserApi.js")
 
@@ -7,8 +8,11 @@ const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [response, setResponse] = useState("")
+    const [code, setCode] = useState("")
 
-    const [token, setToken] = useState("")
+    const [token, setToken] = useState(true)
+
+    const navigate = useNavigate()
 
     async function requestLogin(event) {
         event.preventDefault()
@@ -26,48 +30,67 @@ const Login = (props) => {
             password: password
         }
         const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
-        if (backendResponse.token) {
-            setToken(backendResponse.token)
-            setResponse(backendResponse.message)
-        }
-        setResponse(backendResponse.message)// hier kommt der weg wieder rein
-        // app.post("/user/login", ((req, res) => {
-        //    console.log(req.body)
-        // andere serverlogik
-        //   res.send({ message: "Success", success: true })
-        //}))
+        console.log(backendResponse.token)
+        setToken(backendResponse.token)
+        setResponse(backendResponse.message)
 
-        console.log(response)
+        if (!token) {
+            return
+        }
+        navigate("/chart")
         return;
         // const recievedToken = response.data.token
         // props.setToken(recievedToken)
         // Cookies.set('token',recievedToken)
     }
 
+    async function requestAuth(event) {
+        event.preventDefault()
+
+        const response = await submitUserForm("authenticate",)
+    }
+
     return (
         <main className="Login">
             <h1>Expensee</h1>
-            <p>Login mit Email</p>
-            <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="inputStyle"
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                name="password"
-                placeholder="Passwort"
-                className="inputStyle"
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button
-                className="buttonBase"
-                onClick={requestLogin}>
-                Abschicken
-            </button>
-            <p>{response}</p>
+            <article style={{ display: token ? "block" : "none" }} className="LoginForm">
+                <p>Login mit Email</p>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    className="inputStyle"
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Passwort"
+                    className="inputStyle"
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                    className="buttonBase"
+                    onClick={requestLogin}>
+                    Abschicken
+                </button>
+                <p>{response}</p>
+            </article>
+
+            <article style={{ display: token ? "none" : "block" }} className="AuthForm">
+                <p>Email Bestätigen</p>
+                <input
+                    type="number"
+                    name=""
+                    placeholder="Email-code"
+                    className="inputStyle"
+                />
+                <button
+                    className="buttonBase"
+                    onClick={requestAuth}>
+                    Authentifizieren
+                </button>
+            </article>
             <article className="wavyImage" />
         </main>
     )
