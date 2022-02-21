@@ -18,13 +18,13 @@ app.use(cors())
 app.use(express.json())
 
 app.get("/transaction/all", ((req, res) => {
-
+    console.log(req.body)
 }))
 
 app.post("/transaction/add", ((req, res) => {
     const newTransaction = req.body.newTransaction
     const id = req.body.userId
-    const token = req.body.token
+    const token = req.body.token // req.cookies ?
     // if (isTokenValid(token)){
     //     addNewTransaction(id, newTransaction)
     // }

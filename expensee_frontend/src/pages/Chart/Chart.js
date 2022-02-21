@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Header from "../../components/Header/Header"
 import EASS from "../../components/EASS/EASS"
 import ChartComponent from "../../components/ChartComonent"
