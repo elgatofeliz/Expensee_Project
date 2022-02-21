@@ -40,7 +40,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={token ? <Chart user={loggedUserData} /> : <Welcome />} />
-          <Route path="/addtransaction" element={<AddTransaction token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
+          <Route path="/addtransaction" element={<AddTransaction token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData._id} />} />
           <Route path="/chart" element={<Chart user={loggedUserData} />} />
           <Route path="/login" element={<Login tokenSetter={setToken} changeUserData={setLoggedUserData} />} />
           <Route path="/register" element={<Register />} />

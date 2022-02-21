@@ -12,22 +12,26 @@ const AddTransaction = (props) => {
 
     const sendTransactionForm = (e) => {
         e.preventDefault();
-
+        let tempAmount; 
         if (kategorie !== "Einkommen" && kategorie !== "Sparen") {
-            setGeldbetrag(Math.abs(geldbetrag) * -1)
+            tempAmount = geldbetrag * -1
         }
+        else {
+            tempAmount = geldbetrag
+        }
+
         const token = props.token.token
-        const userId = props.id
+        const userId = props._id
         const transactionId = props.user.transactions.length
         const newTransaction = {
             transactionId,
-            Category: kategorie,
-            Beschreibung: beschreibung,
-            Geldbetrag: geldbetrag,
-            Datum: datum
+            category: kategorie,
+            description: beschreibung,
+            amount: tempAmount,
+            date: datum
         }
 
-        console.log(kategorie, beschreibung, geldbetrag, datum, token, userId)
+        console.log(kategorie, beschreibung, tempAmount, datum, token, userId)
         const response = submitTransactionForm('add', { userId, newTransaction, token })
         // if (response.message === "Success") 
         const temporaryUserData = props.user

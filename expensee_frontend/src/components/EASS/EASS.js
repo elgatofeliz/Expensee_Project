@@ -15,8 +15,8 @@ const EASS = ({ title, amount, detailList, backColor }) => {
                     {detailList.map(i =>
                         <div className="transactionDetails" key={uuidv4()}>
 
-                            <p>{i.Beschreibung}</p>
-                            <p>{i.Geldbetrag}€</p>
+                            <p>{i.description}</p>
+                            <p>{i.amount}€</p>
                         </div>
                     )}
                 </div>
