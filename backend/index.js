@@ -23,11 +23,26 @@ app.get("/transaction/all", ((req, res) => {
 app.post("/transaction/add", ((req, res) => {
     const newTransaction = req.body.newTransaction
     const id = req.body.userId
+    console.log(id)
     const token = req.body.token
+    // console.log(newTransaction,id,token)
     // if (isTokenValid(token)){
     //     addNewTransaction(id, newTransaction)
     // }
     addNewTransaction(id, newTransaction)
+    .then((responseAddtoDB)=>{
+        if (responseAddtoDB.dbResponse.acknowledged) {
+            res.send({
+                status: "acknowledged",
+                message: "acknowledged!"
+            })
+        }
+        else {
+            res.send({
+                status: "not acknowledged",
+                message: "not acknowledged!"
+            })        }
+    })
 }))
 
 app.post("/user/register", (req, res) => {

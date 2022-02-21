@@ -21,7 +21,8 @@ const AddTransaction = (props) => {
         }
 
         const token = props.token.token
-        const userId = props._id
+        // const userId = props._id
+        const userId = "6213731588351006f85c4b3b";
         const transactionId = props.user.transactions.length
         const newTransaction = {
             transactionId,
@@ -31,14 +32,18 @@ const AddTransaction = (props) => {
             date: datum
         }
 
-        console.log(kategorie, beschreibung, tempAmount, datum, token, userId)
-        const response = submitTransactionForm('add', { userId, newTransaction, token })
+        // console.log('test', userId)
+        submitTransactionForm('add', { userId, newTransaction, token })
+        .then((response) => 
+            console.log(response)
+        );
+
         // if (response.message === "Success") 
-        const temporaryUserData = props.user
-        temporaryUserData.transactions.push(newTransaction)
-        console.log(temporaryUserData)
-        props.changeUserData(temporaryUserData)
-        console.log(props.user)
+        // const temporaryUserData = props.user
+        // temporaryUserData.transactions.push(newTransaction)
+        // console.log(temporaryUserData)
+        // props.changeUserData(temporaryUserData)
+        // console.log(props.user)
 
         return
     }
