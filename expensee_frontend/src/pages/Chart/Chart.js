@@ -3,6 +3,9 @@ import EASS from "../../components/EASS/EASS"
 import ChartComponent from "../../components/ChartComonent"
 
 const Chart = (props) => {
+    props.setTitle(false)
+    props.setTitleChart(true)
+    props.setTitleTrans(false)
     return (
         <div>
             <Header title={"Statistik"} />

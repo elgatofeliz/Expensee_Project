@@ -16,29 +16,24 @@
             }
         }
     }
-    >h2{
-        color: red;
-    }
     .nav-menu {
-        display:none;
-        //left:-100%;
-        transition: 850ms;
-      }
-      .nav-menu-active {
-          position: relative;
-       background: #2B2D5B;
-        width: 250px;
-        height: 100vh;
-        box-shadow: 6px 0 5px -5px rgb(30, 30, 30);
-         //display: flex;
-        // justify-content: center;
         position: fixed;
         top:0;
-        left: 0;
-        transition: 350ms;
-
-      }
-      .closeX{
+        left:-100%;
+        transition: 950ms;
+        }
+        .nav-menu-active {
+            position: relative;
+            background: #2B2D5B;
+            width: 250px;
+            height: 100vh;
+            box-shadow: 6px 0 5px -5px rgb(30, 30, 30);
+            position: fixed;
+            top:0;
+            left: 0;
+            transition: 350ms;
+            }
+        .closeX{
             position: absolute;
             right:0;
             padding:1vw;

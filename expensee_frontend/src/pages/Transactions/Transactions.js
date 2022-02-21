@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const Transactions = (props) => {
+    props.setTitle(false)
+    props.setTitleChart(false)
+    props.setTitleTrans(true)
     // states
     const [numberOfTransactions, setNumberOfTransactions] = useState(6)
     const [isShowFull, setIsShowFull] = useState(false)

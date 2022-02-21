@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { submitTransactionForm } from "../../api/postTransactionApi"
 import Header from "../../components/Header/Header"
 let temp = new Date().toISOString().substring(0, (new Date().toISOString().indexOf("T") | 0) + 6 | 0)
 
 const AddTransaction = (props) => {
+    props.setTitle(true)
+    props.setTitleChart(false)
+    props.setTitleTrans(false)
     // states
     const [kategorie, setKategorie] = useState('')
     const [beschreibung, setBeschreibung] = useState('')

@@ -28,7 +28,9 @@ function App() {
   // States
   const [token, setToken] = useState('false')
   const [loggedUserData, setLoggedUserData] = useState(testUser)
-
+  const [title, setTitle] = useState(false)
+  const [titleChart, setTitleChart] = useState(false)
+  const [titleTrans, setTitleTrans] = useState(false)
   // cookies
   const [cookies, setCookie, removeCookie] = useCookies(['name']);
   setCookie("Hallo", "ich bin ein cookies")
@@ -39,16 +41,16 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={token ? <Chart user={loggedUserData} /> : <Welcome />} />
-          <Route path="/addtransaction" element={<AddTransaction token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
-          <Route path="/chart" element={<Chart user={loggedUserData} />} />
-          <Route path="/login" element={<Login tokenSetter={setToken} changeUserData={setLoggedUserData} />} />
+          <Route path="/" element={token ? <Chart setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} /> : <Welcome />} />
+          <Route path="/addtransaction" element={<AddTransaction setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
+          <Route path="/chart" link={"chartLink"} element={<Chart user={loggedUserData} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} />} />
+          <Route path="/login" element={<Login tokenSetter={setToken} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/transactions" element={<Transactions user={loggedUserData} changeUserData={setLoggedUserData} />} />
+          <Route path="/transactions" element={<Transactions setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} changeUserData={setLoggedUserData} />} />
           <Route path="*" element={<Error />} />
           <Route path="/welcome" element={<Welcome />} />
         </Routes>
-        {token && <Footer />}
+        {token && <Footer title={title} titleChart={titleChart} titleTrans={titleTrans} />}
       </Router>
     </div >
   );
