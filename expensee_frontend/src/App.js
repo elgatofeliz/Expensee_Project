@@ -26,7 +26,7 @@ import testUser from './Dev_items/testuser';
 function App() {
   // Importing user data from server at the first load 
   // States
-  const [token, setToken] = useState('false')
+  const [token, setToken] = useState(false)
   const [loggedUserData, setLoggedUserData] = useState(testUser)
 
   // cookies
@@ -35,16 +35,25 @@ function App() {
   setCookie("zwei", "ich bin ein zwei")
   removeCookie("zwei", "ich bin ein zwei")
 
+  const getToken = (token) => {
+    const loginToken = typeof token === "string" && token.length > 0
+    if (loginToken) {
+      setToken(token)
+      setCookie("Token", token)
+      return
+    }
+  }
+
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={token ? <Chart user={loggedUserData} /> : <Welcome />} />
           <Route path="/addtransaction" element={<AddTransaction token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
-          <Route path="/chart" element={<Chart user={loggedUserData} />} />
-          <Route path="/login" element={<Login tokenSetter={setToken} changeUserData={setLoggedUserData} />} />
+          <Route path="/chart" element={<Chart user={loggedUserData} token={cookies} />} />
+          <Route path="/login" element={<Login getToken={getToken} changeUserData={setLoggedUserData} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/transactions" element={<Transactions user={loggedUserData} changeUserData={setLoggedUserData} />} />
+          <Route path="/transactions" element={<Transactions user={loggedUserData} changeUserData={setLoggedUserData} token={cookies} />} />
           <Route path="*" element={<Error />} />
           <Route path="/welcome" element={<Welcome />} />
         </Routes>
@@ -54,4 +63,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

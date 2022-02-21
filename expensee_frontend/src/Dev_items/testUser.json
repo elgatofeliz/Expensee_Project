@@ -14,10 +14,10 @@
     "transactions": [
         {
             "transactionId": 0,
-            "Category": "Einkommen  ",
-            "Beschreibung": "Gehalt  ",
-            "Geldbetrag": 121,
-            "Datum": "15.2.2022, 11:51:36  "
+            "category": "Einkommen  ",
+            "description": "Gehalt  ",
+            "amount": 121,
+            "date": "15.2.2022, 11:51:36  "
         },
         {
             "transactionId": 1,
