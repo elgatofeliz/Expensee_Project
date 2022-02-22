@@ -24,13 +24,7 @@ app.get("/transaction/all", ((req, res) => {
 app.post("/transaction/add", ((req, res) => {
     const newTransaction = req.body.newTransaction
     const id = req.body.userId
-<<<<<<< HEAD
-    console.log(id)
-    const token = req.body.token
-    // console.log(newTransaction,id,token)
-=======
     const token = req.body.token // req.cookies ?
->>>>>>> fd84b8ec52e5ca39b05e56c25fa8b9ee11ee1274
     // if (isTokenValid(token)){
     //     addNewTransaction(id, newTransaction)
     // }
@@ -108,11 +102,6 @@ app.post("/user/login", ((req, res) => {
 
 app.post("/user/authenticate", ((req, res) => {
 
-<<<<<<< HEAD
-=======
-    console.log(req.body)
-
->>>>>>> dennis
     const email = req.body.email
     const code = req.body.authCode
 
@@ -121,11 +110,7 @@ app.post("/user/authenticate", ((req, res) => {
             if (!response.acknowledged) {
                 throw new Error("Es ist ein Fehler aufgetreten. Bitte versuche es noch einmal.")
             }
-<<<<<<< HEAD
-            res.send({ message: "Du hast dich erfolgreich authentifiziert." })
-=======
             res.send({ status: 200, message: "Du hast dich erfolgreich authentifiziert und wirst in wenigen Sekunden weitergeleitet" })
->>>>>>> dennis
         })
         .catch((err) => {
             res.send({ message: err.message })
