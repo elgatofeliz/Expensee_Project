@@ -40,10 +40,10 @@ const Transactions = (props) => {
                 <div className="transactionsList">
                     {user.map(i => <TransactionItem
                         key={uuidv4()}
-                        title={i.Beschreibung}
-                        date={i.Datum}
-                        amount={i.Geldbetrag}
-                        category={i.Category}
+                        title={i.description}
+                        date={i.date}
+                        amount={i.amount}
+                        category={i.category}
                     />)}
                 </div>
                 <button className="mehr buttonBase" onClick={loadMore}>MEHR TRANSAKTIONEN</button>

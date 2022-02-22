@@ -23,7 +23,7 @@ const Chart = (props) => {
                 </div>
                 <div className="EASS">
                     <EASS title='Einkommen' backColor='linear-gradient(90deg, #F63535 0%, #FF009D 100%)'
-                        detailList={props.user.transactions.filter(i => i.Category === "Einkommen")}
+                        detailList={props.user.transactions.filter(i => i.category === "Einkommen")}
                         amount={props.user.EASS.Einkommen} />
                     <EASS title='Ausgeben' backColor='#515FEB'
                         detailList={props.user.transactions.filter(i =>
@@ -34,7 +34,7 @@ const Chart = (props) => {
                         )}
                         amount={props.user.EASS.Ausgeben} />
                     <EASS title='Sparen' backColor='#EFB722'
-                        detailList={props.user.transactions.filter(i => i.Category === "Sparen")}
+                        detailList={props.user.transactions.filter(i => i.category === "Sparen")}
                         amount={props.user.EASS.Sparen} />
                     <EASS title='Sontiges' backColor='#95989A'
                         detailList={props.user.transactions.filter(i =>
