@@ -8,6 +8,7 @@ const { addNewTransaction } = require('./src/db_access/transaction-dao.js')
 const { registerUserService } = require('./src/services/registerUserService.js')
 const { passwordHash } = require("./src/middleware/passwordHash.js")
 const { loginUserService } = require("./src/services/loginUserService.js")
+const { authenticateUserService } = require("./src/services/authenticateUserService.js")
 //FUNCTIONS
 
 const app = express()
@@ -17,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get("/transaction/all", ((req, res) => {
-
+    console.log(req.body)
 }))
 
 app.post("/transaction/add", ((req, res) => {
@@ -30,19 +31,20 @@ app.post("/transaction/add", ((req, res) => {
     //     addNewTransaction(id, newTransaction)
     // }
     addNewTransaction(id, newTransaction)
-    .then((responseAddtoDB)=>{
-        if (responseAddtoDB.dbResponse.acknowledged) {
-            res.send({
-                status: "acknowledged",
-                message: "acknowledged!"
-            })
-        }
-        else {
-            res.send({
-                status: "not acknowledged",
-                message: "not acknowledged!"
-            })        }
-    })
+        .then((responseAddtoDB) => {
+            if (responseAddtoDB.dbResponse.acknowledged) {
+                res.send({
+                    status: "acknowledged",
+                    message: "acknowledged!"
+                })
+            }
+            else {
+                res.send({
+                    status: "not acknowledged",
+                    message: "not acknowledged!"
+                })
+            }
+        })
 }))
 
 app.post("/user/register", (req, res) => {
@@ -77,20 +79,19 @@ app.post("/user/login", ((req, res) => {
     const password = req.body.password
 
     loginUserService({ email, password })
-        .then((response) => {
-            if (!response.token) {
+        .then((token) => {
+            if (!token) {
+                console.log("return false")
                 res.send({
                     token: false,
                     message: "Bitte authentifiziere deine Email"
                 })
-                console.log("false")
                 return
             }
             res.send({
                 token: token,
                 message: "Erfolgreich eingeloggt."
             })
-            console.log("token")
         })
         .catch((err) => {
             console.log("err on login:", err)
@@ -102,10 +103,23 @@ app.post("/user/login", ((req, res) => {
 }))
 
 app.post("/user/authenticate", ((req, res) => {
-    const email = req.body.email
-    const code = req.body.code
 
+    console.log(req.body)
+
+    const email = req.body.email
+    const code = req.body.authCode
+
+    authenticateUserService(email, code)
+        .then((response) => {
+            if (!response.acknowledged) {
+                throw new Error("Es ist ein Fehler aufgetreten. Bitte versuche es noch einmal.")
+            }
+            res.send({ status: 200, message: "Du hast dich erfolgreich authentifiziert und wirst in wenigen Sekunden weitergeleitet" })
+        })
+        .catch((err) => {
+            res.send({ message: err.message })
+        })
 }))
 
-const PORT = process.env.PORT || 9000
+const PORT = process.env.PORT || 9001
 app.listen(PORT, () => console.log(`listening on port ${PORT} `))
