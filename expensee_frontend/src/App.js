@@ -32,19 +32,7 @@ function App() {
   const [titleChart, setTitleChart] = useState(false)
   const [titleTrans, setTitleTrans] = useState(false)
   // cookies
-  const [cookies, setCookie, removeCookie] = useCookies(['name']);
-  setCookie("Hallo", "ich bin ein cookies")
-  setCookie("zwei", "ich bin ein zwei")
-  removeCookie("zwei", "ich bin ein zwei")
-
-  const getToken = (token) => {
-    const loginToken = typeof token === "string" && token.length > 0
-    if (loginToken) {
-      setToken(token)
-      setCookie("Token", token)
-      return
-    }
-  }
+  // const [cookies, setCookie, removeCookie] = useCookies(['name']);
 
   return (
     <div className="App">

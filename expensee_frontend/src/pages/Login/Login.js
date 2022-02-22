@@ -15,7 +15,7 @@ const Login = (props) => {
 
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
 
-    const [token, setToken] = useState(true)
+    const [loginToken, setLoginToken] = useState(true)
 
     const navigate = useNavigate()
 
@@ -38,7 +38,7 @@ const Login = (props) => {
         const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
         console.log(backendResponse)
         if (!backendResponse.token) {
-            setToken(backendResponse.token)
+            setLoginToken(backendResponse.token)
             return
         }
         setCookie("Token", backendResponse.token)
