@@ -10,5 +10,10 @@ async function getUserByEmail(email) {
     const foundUser = await db.collection('user').findOne({ email });
     return foundUser
 }
+async function authenticateUser(email) {
+    const db = await getDb()
+    const authenticate = await db.collection("user").updateOne({ email: email }, { $set: { isAuth: true } })
+    return authenticate
+}
 
-module.exports = { registerUser, getUserByEmail }
+module.exports = { registerUser, getUserByEmail, authenticateUser }

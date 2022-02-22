@@ -8,6 +8,7 @@ const { addNewTransaction } = require('./src/db_access/transaction-dao.js')
 const { registerUserService } = require('./src/services/registerUserService.js')
 const { passwordHash } = require("./src/middleware/passwordHash.js")
 const { loginUserService } = require("./src/services/loginUserService.js")
+const { authenticateUserService } = require("./src/services/authenticateUserService.js")
 //FUNCTIONS
 
 const app = express()
@@ -17,15 +18,19 @@ app.use(cors())
 app.use(express.json())
 
 app.get("/transaction/all", ((req, res) => {
-
+    console.log(req.body)
 }))
 
 app.post("/transaction/add", ((req, res) => {
     const newTransaction = req.body.newTransaction
     const id = req.body.userId
+<<<<<<< HEAD
     console.log(id)
     const token = req.body.token
     // console.log(newTransaction,id,token)
+=======
+    const token = req.body.token // req.cookies ?
+>>>>>>> fd84b8ec52e5ca39b05e56c25fa8b9ee11ee1274
     // if (isTokenValid(token)){
     //     addNewTransaction(id, newTransaction)
     // }
@@ -77,20 +82,19 @@ app.post("/user/login", ((req, res) => {
     const password = req.body.password
 
     loginUserService({ email, password })
-        .then((response) => {
-            if (!response.token) {
+        .then((token) => {
+            if (!token) {
+                console.log("return false")
                 res.send({
-                    token: false,
+                    token: "",
                     message: "Bitte authentifiziere deine Email"
                 })
-                console.log("false")
                 return
             }
             res.send({
                 token: token,
                 message: "Erfolgreich eingeloggt."
             })
-            console.log("token")
         })
         .catch((err) => {
             console.log("err on login:", err)
@@ -102,9 +106,20 @@ app.post("/user/login", ((req, res) => {
 }))
 
 app.post("/user/authenticate", ((req, res) => {
-    const email = req.body.email
-    const code = req.body.code
 
+    const email = req.body.email
+    const code = req.body.authCode
+
+    authenticateUserService(email, code)
+        .then((response) => {
+            if (!response.acknowledged) {
+                throw new Error("Es ist ein Fehler aufgetreten. Bitte versuche es noch einmal.")
+            }
+            res.send({ message: "Du hast dich erfolgreich authentifiziert." })
+        })
+        .catch((err) => {
+            res.send({ message: err.message })
+        })
 }))
 
 const PORT = process.env.PORT || 9000

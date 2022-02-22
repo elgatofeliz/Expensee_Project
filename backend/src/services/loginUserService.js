@@ -34,7 +34,7 @@ async function loginUserService({ email, password }) {
     console.log(foundUser)
     if (!foundUser.isAuth) {
         console.log("user aint authenticated")
-        return {}
+        return false
     }
     console.log("user is Authenticated")
     const token = generateToken(foundUser)

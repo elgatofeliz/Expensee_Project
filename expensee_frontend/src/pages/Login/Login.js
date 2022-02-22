@@ -5,12 +5,14 @@ const { submitForm } = require("../../api/postUserApi.js")
 
 // props.changeUserData
 const Login = (props) => {
+    console.log(props)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [response, setResponse] = useState("")
     const [code, setCode] = useState("")
+    const [authResponse, setAuthResponse] = useState("")
 
-    const [token, setToken] = useState(true)
+    const [loginToken, setLoginToken] = useState("token")
 
     const navigate = useNavigate()
 
@@ -29,14 +31,17 @@ const Login = (props) => {
             email: email,
             password: password
         }
-        const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
-        console.log(backendResponse.token)
-        setToken(backendResponse.token)
-        setResponse(backendResponse.message)
 
-        if (!token) {
+        const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
+
+        if (!backendResponse.token) {
+            setLoginToken(backendResponse.token)
             return
         }
+        console.log("Login", backendResponse.token)
+        setLoginToken(backendResponse.token)
+
+        props.getToken(backendResponse.token)
         navigate("/chart")
         return;
         // const recievedToken = response.data.token
@@ -44,16 +49,24 @@ const Login = (props) => {
         // Cookies.set('token',recievedToken)
     }
 
-    async function requestAuth(event) {
+    async function requestAuthentication(event) {
         event.preventDefault()
 
-        const response = await submitUserForm("authenticate",)
+        const user = {
+            email: email,
+            authCode: code,
+        }
+
+        const response = await submitUserForm("authenticate", user)
+        console.log(response)
+        setAuthResponse(response.message)
+        return
     }
 
     return (
         <main className="Login">
             <h1>Expensee</h1>
-            <article style={{ display: token ? "block" : "none" }} className="LoginForm">
+            <article style={{ display: loginToken ? "block" : "none" }} className="LoginForm">
                 <p>Login mit Email</p>
                 <input
                     type="email"
@@ -77,19 +90,21 @@ const Login = (props) => {
                 <p>{response}</p>
             </article>
 
-            <article style={{ display: token ? "none" : "block" }} className="AuthForm">
+            <article style={{ display: loginToken ? "none" : "block" }} className="AuthForm">
                 <p>Email Bestätigen</p>
                 <input
                     type="number"
                     name=""
                     placeholder="Email-code"
                     className="inputStyle"
+                    onChange={(e) => setCode(e.target.value)}
                 />
                 <button
                     className="buttonBase"
-                    onClick={requestAuth}>
+                    onClick={requestAuthentication}>
                     Authentifizieren
                 </button>
+                <p>{authResponse}</p>
             </article>
             <article className="wavyImage" />
         </main>
