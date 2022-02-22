@@ -26,7 +26,7 @@ import testUser from './Dev_items/testuser';
 function App() {
   // Importing user data from server at the first load 
   // States
-  const [token, setToken] = useState(false)
+  const [token, setToken] = useState('false')
   const [loggedUserData, setLoggedUserData] = useState(testUser)
   const [title, setTitle] = useState(false)
   const [titleChart, setTitleChart] = useState(false)
@@ -39,7 +39,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={token ? <Chart setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} /> : <Welcome />} />
-          <Route path="/addtransaction" element={<AddTransaction setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
+          <Route path="/addtransaction" element={<AddTransaction setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
           <Route path="/chart" link={"chartLink"} element={<Chart user={loggedUserData} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} />} />
           <Route path="/login" element={<Login tokenSetter={setToken} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} />} />
           <Route path="/register" element={<Register />} />
@@ -53,4 +53,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
