@@ -12,8 +12,8 @@ async function getUserByEmail(email) {
 }
 async function authenticateUser(email) {
     const db = await getDb()
-    const authenticate = await db.collection("user").updateOne({ email: email }, { $set: { isAuth: true } })
-    return authenticate
+    const response = await db.collection("user").updateOne({ email: email }, { $set: { isAuth: true } })
+    return response
 }
 
 module.exports = { registerUser, getUserByEmail, authenticateUser }

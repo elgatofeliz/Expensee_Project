@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { submitUserForm } from '../../api/postUserApi.js'
+import { useCookies } from 'react-cookie';
 const { submitForm } = require("../../api/postUserApi.js")
 
 // props.changeUserData
@@ -12,7 +13,9 @@ const Login = (props) => {
     const [code, setCode] = useState("")
     const [authResponse, setAuthResponse] = useState("")
 
-    const [loginToken, setLoginToken] = useState("token")
+    const [cookies, setCookie, removeCookie] = useCookies(['name']);
+
+    const [token, setToken] = useState(true)
 
     const navigate = useNavigate()
 
@@ -33,33 +36,30 @@ const Login = (props) => {
         }
 
         const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
-
+        console.log(backendResponse)
         if (!backendResponse.token) {
-            setLoginToken(backendResponse.token)
+            setToken(backendResponse.token)
             return
         }
-        console.log("Login", backendResponse.token)
-        setLoginToken(backendResponse.token)
-
-        props.getToken(backendResponse.token)
+        setCookie("Token", backendResponse.token)
         navigate("/chart")
-        return;
-        // const recievedToken = response.data.token
-        // props.setToken(recievedToken)
-        // Cookies.set('token',recievedToken)
+        return
     }
 
     async function requestAuthentication(event) {
         event.preventDefault()
-
-        const user = {
+        const data = {
             email: email,
-            authCode: code,
+            authCode: code
         }
 
-        const response = await submitUserForm("authenticate", user)
-        console.log(response)
-        setAuthResponse(response.message)
+        const response = await submitUserForm("authenticate", data)
+
+        setResponse(response.message)
+
+        if (response.status === 200) {
+            setTimeout(() => { return navigate("/chart") }, 5000)
+        }
         return
     }
 
@@ -104,7 +104,7 @@ const Login = (props) => {
                     onClick={requestAuthentication}>
                     Authentifizieren
                 </button>
-                <p>{authResponse}</p>
+                <p>{response}</p>
             </article>
             <article className="wavyImage" />
         </main>

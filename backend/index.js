@@ -35,19 +35,20 @@ app.post("/transaction/add", ((req, res) => {
     //     addNewTransaction(id, newTransaction)
     // }
     addNewTransaction(id, newTransaction)
-    .then((responseAddtoDB)=>{
-        if (responseAddtoDB.dbResponse.acknowledged) {
-            res.send({
-                status: "acknowledged",
-                message: "acknowledged!"
-            })
-        }
-        else {
-            res.send({
-                status: "not acknowledged",
-                message: "not acknowledged!"
-            })        }
-    })
+        .then((responseAddtoDB) => {
+            if (responseAddtoDB.dbResponse.acknowledged) {
+                res.send({
+                    status: "acknowledged",
+                    message: "acknowledged!"
+                })
+            }
+            else {
+                res.send({
+                    status: "not acknowledged",
+                    message: "not acknowledged!"
+                })
+            }
+        })
 }))
 
 app.post("/user/register", (req, res) => {
@@ -107,6 +108,11 @@ app.post("/user/login", ((req, res) => {
 
 app.post("/user/authenticate", ((req, res) => {
 
+<<<<<<< HEAD
+=======
+    console.log(req.body)
+
+>>>>>>> dennis
     const email = req.body.email
     const code = req.body.authCode
 
@@ -115,12 +121,16 @@ app.post("/user/authenticate", ((req, res) => {
             if (!response.acknowledged) {
                 throw new Error("Es ist ein Fehler aufgetreten. Bitte versuche es noch einmal.")
             }
+<<<<<<< HEAD
             res.send({ message: "Du hast dich erfolgreich authentifiziert." })
+=======
+            res.send({ status: 200, message: "Du hast dich erfolgreich authentifiziert und wirst in wenigen Sekunden weitergeleitet" })
+>>>>>>> dennis
         })
         .catch((err) => {
             res.send({ message: err.message })
         })
 }))
 
-const PORT = process.env.PORT || 9000
+const PORT = process.env.PORT || 9001
 app.listen(PORT, () => console.log(`listening on port ${PORT} `))

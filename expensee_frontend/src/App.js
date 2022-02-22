@@ -50,27 +50,12 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-<<<<<<< HEAD
           <Route path="/" element={token ? <Chart setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} /> : <Welcome />} />
           <Route path="/addtransaction" element={<AddTransaction setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
           <Route path="/chart" link={"chartLink"} element={<Chart user={loggedUserData} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} />} />
           <Route path="/login" element={<Login tokenSetter={setToken} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} />} />
-=======
-          <Route path="/" element={token ? <Chart user={loggedUserData} /> : <Welcome />} />
-<<<<<<< HEAD
-          <Route path="/addtransaction" element={<AddTransaction token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData._id} />} />
-          <Route path="/chart" element={<Chart user={loggedUserData} />} />
-          <Route path="/login" element={<Login tokenSetter={setToken} changeUserData={setLoggedUserData} />} />
->>>>>>> e2e8128cc0df2a787906014303c6c0413e9c98b4
           <Route path="/register" element={<Register />} />
           <Route path="/transactions" element={<Transactions setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} changeUserData={setLoggedUserData} />} />
-=======
-          <Route path="/addtransaction" element={<AddTransaction token={cookies} changeUserData={setLoggedUserData} user={loggedUserData} id={loggedUserData.id} />} />
-          <Route path="/chart" element={<Chart user={loggedUserData} token={cookies} />} />
-          <Route path="/login" element={<Login getToken={getToken} changeUserData={setLoggedUserData} />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/transactions" element={<Transactions user={loggedUserData} changeUserData={setLoggedUserData} token={cookies} />} />
->>>>>>> fd84b8ec52e5ca39b05e56c25fa8b9ee11ee1274
           <Route path="*" element={<Error />} />
           <Route path="/welcome" element={<Welcome />} />
         </Routes>
