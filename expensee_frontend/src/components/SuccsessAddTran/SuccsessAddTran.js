@@ -28,7 +28,7 @@ const SuccsessAddTran = (props) => {
                     </div>
                     <div className="kategorieSumme">
                         <h4>Summe</h4>
-                        <p>{props.amount}</p>
+                        <p>{props.amount} €</p>
                     </div>
                     <button onClick={toggleClose}>Close</button>
                 </article>

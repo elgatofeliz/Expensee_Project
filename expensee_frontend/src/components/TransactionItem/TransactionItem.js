@@ -1,4 +1,5 @@
 const TransactionItem = (props) => {
+
     return (
         <div className="TransactionItem">
             <div className="circle"
@@ -6,7 +7,7 @@ const TransactionItem = (props) => {
             ></div>
             <div className="titleAndDate">
                 <div className="title">{props.title}</div>
-                <div className="date">{props.date}</div>
+                <div className="date">{props.date.replace('T', '    ')}</div>
             </div>
             <div className="amount">{props.amount}€</div>
         </div>

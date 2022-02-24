@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import ReactDOM from 'react'
 const { submitUserForm } = require("../../api/postUserApi.js")
 
-const Register = () => {
+const Register = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [validatePw, setValidatePw] = useState("")

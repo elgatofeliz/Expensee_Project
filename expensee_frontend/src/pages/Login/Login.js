@@ -14,15 +14,25 @@ const Login = (props) => {
     const [authResponse, setAuthResponse] = useState("")
 
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
-    console.log(cookies)
     const [loginToken, setLoginToken] = useState(true)
+
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        isAuthenticated()
-            .then((res) => console.log(res))
-    }, [])
+    /* 
+            .then(() => {
+                console.log("Frontend:", backendResponse)
+                if (!backendResponse.token) {
+                    console.log("False")
+                    setLoginToken(backendResponse.token)
+                    return
+                }
+                console.log("True")
+                setCookie("Token", backendResponse.token)
+            })
+            .then(props.checkAuth())
+            .then(setTimeout(() => { return navigate("/protected/chart") }, 3000))
+    */
 
     async function requestLogin(event) {
         event.preventDefault()
@@ -40,17 +50,16 @@ const Login = (props) => {
             password: password
         }
 
-        const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
-        console.log("Frontend:", backendResponse)
+        const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend       
         if (!backendResponse.token) {
+            console.log("False")
             setLoginToken(backendResponse.token)
             return
         }
+        console.log("True")
         setCookie("Token", backendResponse.token)
-        // props.setIsUserLoggedIn(props.isUserLoggedIn + 1)
-        // props.setAuthenticated(true)
-        // props.setAwaitResponse(true)
-        setTimeout(() => { return navigate("/chart") }, 3000)
+        props.setAuthenticated(true)
+        setTimeout(() => { return navigate("/chart") }, 1000)
         return
     }
 

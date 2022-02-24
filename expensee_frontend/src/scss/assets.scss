@@ -68,11 +68,12 @@ $appWidth: 400px;
   max-width: $appWidth;
 }
 
-
 .App {
     height: 800px;
     background-color: $backgroundColor;
-    margin: 0 auto;
+    margin-right:  auto;
+    margin-left:  auto;
+
 }
 
 .wavyImage{

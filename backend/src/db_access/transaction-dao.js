@@ -17,6 +17,8 @@ const addNewTransaction = async (id, transactionObject) => {
     let responseAusgebenDB;
     let responseSumEASS_DB;
     const positiveAmount = Math.abs(unchangedAmount)
+    // console.log(unchangedAmount)
+    // console.log(positiveAmount)
     switch (transactionObject.category) {
         case "Einkommen":
             await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Einkommen": positiveAmount } })
@@ -36,12 +38,11 @@ const addNewTransaction = async (id, transactionObject) => {
         case "Sparen":
             responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Sparen": positiveAmount } })
             break;
-        case "Sontiges":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Sontiges": positiveAmount } })
+        case "Sonstiges":
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Sonstiges": positiveAmount } })
             break;
 
         default:
-            throw new Error('add new transaction failed')
             break;
     }
     // console.log(dbResponse,responseAusgebenDB,responseSumEASS_DB)

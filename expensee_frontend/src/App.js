@@ -8,8 +8,6 @@ import { Navigate, Outlet, BrowserRouter as Router, Routes, Route } from "react-
 //Components Imports
 import Header from "./components/Header/Header"
 import Footer from './components/Footer/Footer'
-import Loading from "./components/Loading/Loading.js"
-import ProtectedRoutes from "./components/ProtectedRoutes.js"
 
 //Pages Imports
 import Welcome from "./pages/Welcome/Welcome.js"
@@ -26,10 +24,8 @@ import './scss/main.scss';
 // Constant Imports
 import testUser from './Dev_items/testuser';
 
-const { isAuthenticated } = require("./api/isAuthenticated.js")
+// const { isAuthenticated } = require("./api/isAuthenticated.js")
 
-
-const test = ProtectedRoutes()
 function App() {
   // useEffect(() => {
   //   if (isUserLoggedIn) {
@@ -59,10 +55,13 @@ function App() {
   const [newTransaction, setNewTransaction] = useState(3)
   const [awaitResponse, setAwaitResponse] = useState(false)
   const [authenticated, setAuthenticated] = useState(false)
+  const [location, setLocation] = useState(false)
   // cookies
   const [cookies, setCookie, removeCookie] = useCookies(['name']);
   // fetch user data
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(3)
+
+  const url = 'http://localhost:3000/'
 
   //Get Userdata from Database to show account balance
   useEffect(() => {
@@ -74,26 +73,43 @@ function App() {
   }, [isUserLoggedIn, newTransaction, authenticated])
 
   useEffect(() => {
-    console.log('Aktuelles User: ', loggedUserData)
+    fetchUserData()
+    console.log(loggedUserData)
   }, [loggedUserData])
 
-  const test = ProtectedRoutes()
-  console.log("Test", test)
+  useEffect(() => {
+    console.log(location)
+  }, [location])
+
+  useEffect(() => {
+    setLocation(window.location.href)
+  })
+
+
 
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<Welcome />} />
+          <Route path="/login" element={<Login
+            tokenSetter={setToken} setTitle={setTitle}
+            setTitleChart={setTitleChart} setTitleTrans={setTitleTrans}
+            changeUserData={setLoggedUserData} setAuthenticated={setAuthenticated}
+            setAwaitResponse={setAwaitResponse}
+          />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/addtransaction" element={<AddTransaction setNewTransaction={setNewTransaction} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} user={loggedUserData} token={token} />} />
-          <Route path="/chart" link={"chartLink"} element={<Chart setAuthenticated={setAuthenticated} setAwaitResponse={setAwaitResponse} user={loggedUserData} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} />} />
+          <Route path="/chart" element={<Chart setAuthenticated={setAuthenticated} setAwaitResponse={setAwaitResponse} user={loggedUserData} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} />} />
           <Route path="/transactions" element={<Transactions setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} changeUserData={setLoggedUserData} />} />
           <Route path="*" element={<Error />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/login" element={<Login tokenSetter={setToken} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} />} />
-          <Route path="/register" element={<Register />} />
+
         </Routes>
-        {token && <Footer title={title} titleChart={titleChart} titleTrans={titleTrans} />}
+        {(location != `${url}login` &&
+          location != `${url}register` &&
+          location != `${url}`
+        )
+          && <Footer title={title} titleChart={titleChart} titleTrans={titleTrans} />}
       </Router>
     </div >
   );

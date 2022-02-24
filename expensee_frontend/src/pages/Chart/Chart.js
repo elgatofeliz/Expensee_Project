@@ -30,10 +30,10 @@ const Chart = (props) => {
                         amount={props.user.EASS.Einkommen} />
                     <EASS title='Ausgeben' backColor='#515FEB'
                         detailList={props.user.transactions.filter(i =>
-                            i.Category === "Lebensmittel" ||
-                            i.Category === "Shopping" ||
-                            i.Category === "Wohnung" ||
-                            i.Category === "Restaurant"
+                            i.category === "Lebensmittel" ||
+                            i.category === "Shopping" ||
+                            i.category === "Wohnung" ||
+                            i.category === "Restaurant"
                         )}
                         amount={props.user.EASS.Ausgeben} />
                     <EASS title='Sparen' backColor='#EFB722'
@@ -41,11 +41,11 @@ const Chart = (props) => {
                         amount={props.user.EASS.Sparen} />
                     <EASS title='Sontiges' backColor='#95989A'
                         detailList={props.user.transactions.filter(i =>
-                            i.Category !== "Lebensmittel" &&
-                            i.Category !== "Shopping" &&
-                            i.Category !== "Wohnung" &&
-                            i.Category !== "Sparen" &&
-                            i.Category !== "Einkommen"
+                            i.category !== "Lebensmittel" &&
+                            i.category !== "Shopping" &&
+                            i.category !== "Wohnung" &&
+                            i.category !== "Sparen" &&
+                            i.category !== "Einkommen"
                         )}
                         amount={props.user.EASS.Sonstiges} />
                 </div>

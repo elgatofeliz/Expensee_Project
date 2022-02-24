@@ -11,9 +11,5 @@ const isAuth = async () => {
 
 export default async function ProtectedRoutes() {
     const auth = await isAuth()
-    console.log("ProtectedRoutes", auth.token)
-
-    const element = auth.token ? <Outlet /> : <Welcome />
-    console.log("Element: ", element)
     return auth
 }

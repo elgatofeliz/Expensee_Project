@@ -11,7 +11,7 @@ const Header = (props) => {
 
     const logout = () => {
         removeCookie("Token")
-        history("/welcome")
+        window.location.href = "http://localhost:3000/";
     }
 
     return (

@@ -32,13 +32,15 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.get("/user/authenticationCheck", ((req, res) => {
-    console.log("AuthCheck: ", req.cookies.Token)
+    console.log("COOKIES: ", req.cookies)
     if (!req.cookies.Token) {
+        console.log("AuthCheck: Kein Cookie gefunden")
         res.send(false)
         return
     }
     const tokenVerified = verifyToken(req.cookies.Token)
     if (!tokenVerified) {
+        console.log("AuthCheck: Token nicht verifiziert")
         res.send(false)
         return
     }
@@ -47,12 +49,9 @@ app.get("/user/authenticationCheck", ((req, res) => {
     return
 }))
 
-app.get("/transaction/all", ((req, res) => {
-    console.log(req.body)
-}))
-
 app.get("/allUserData", ((req, res) => {
     console.log("allUserData ROUTE")
+    console.log(req.cookies.Token)
     if (!req.cookies.Token) {
         res.send({ message: "kein Token" })
         return

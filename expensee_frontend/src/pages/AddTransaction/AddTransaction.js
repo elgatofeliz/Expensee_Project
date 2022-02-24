@@ -40,12 +40,6 @@ const AddTransaction = (props) => {
             amount: tempAmount,
             date: datum
         }
-        // if (status === "acknowledged"){
-        //     console.log("Hat geklappt hier sind die daten")
-        // }else(
-        //     console.log("Hat nicht  geklappt etwas fehlt")
-        // )
-        // console.log(responseAddtoDB.dbResponse.acknowledged)
         console.log('new Transactions', newTransaction)
         submitTransactionForm('add', { userId, newTransaction })
             .then((response) => {
