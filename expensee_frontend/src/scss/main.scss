@@ -5,8 +5,10 @@
 //Components
 @import "../components/Footer/Footer.scss";
 @import "../components/Header/Header.scss";
+@import "../components/SuccsessAddTran/SuccsessAddTran.scss";
 @import '../components/TransactionItem/TransactionItem.scss';
 @import '../components/EASS/EASS.scss';
+@import'../components/Loading/Loading.scss';
 
 //Pages
 @import "../pages/AddTransaction/AddTransaction.scss";

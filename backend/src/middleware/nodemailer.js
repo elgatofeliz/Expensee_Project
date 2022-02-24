@@ -11,7 +11,6 @@ const transporter = nodemailer.createTransport({
 })
 
 const sendMail = (authCode, userMail) => {
-
     const mailDetails = {
         from: "Expensee Admin",
         to: userMail,

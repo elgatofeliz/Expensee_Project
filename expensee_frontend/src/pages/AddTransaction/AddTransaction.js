@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import { submitTransactionForm } from "../../api/postTransactionApi"
 import Header from "../../components/Header/Header"
+import SuccsessAddTran from "../../components/SuccsessAddTran/SuccsessAddTran"
 let temp = new Date().toISOString().substring(0, (new Date().toISOString().indexOf("T") | 0) + 6 | 0)
+
 
 const AddTransaction = (props) => {
     props.setTitle(true)
@@ -13,9 +15,13 @@ const AddTransaction = (props) => {
     const [geldbetrag, setGeldbetrag] = useState(0)
     const [datum, setDatum] = useState(temp)
 
+    const [close, setClose] = useState(false)
+
+    // reRender nach neue Transaktion
+    // useEffect(,[])
     const sendTransactionForm = (e) => {
         e.preventDefault();
-        let tempAmount; 
+        let tempAmount;
         if (kategorie !== "Einkommen" && kategorie !== "Sparen") {
             tempAmount = geldbetrag * -1
         }
@@ -23,9 +29,9 @@ const AddTransaction = (props) => {
             tempAmount = geldbetrag
         }
 
-        const token = props.token.token
-        // const userId = props._id
-        const userId = "6213731588351006f85c4b3b";
+        const userId = props.user._id
+        console.log(userId)
+        // const userId = "6213731588351006f85c4b3b";
         const transactionId = props.user.transactions.length
         const newTransaction = {
             transactionId,
@@ -34,12 +40,27 @@ const AddTransaction = (props) => {
             amount: tempAmount,
             date: datum
         }
+        // if (status === "acknowledged"){
+        //     console.log("Hat geklappt hier sind die daten")
+        // }else(
+        //     console.log("Hat nicht  geklappt etwas fehlt")
+        // )
+        // console.log(responseAddtoDB.dbResponse.acknowledged)
+        console.log('new Transactions', newTransaction)
+        submitTransactionForm('add', { userId, newTransaction })
+            .then((response) => {
+                console.log(response.status)
+                if (response.status === "acknowledged") {
+                    setClose(true)
+                    console.log("Hat geklappt hier sind die daten")
+                    props.setNewTransaction(newTransaction + 1)
+                } else (
+                    console.log("Hat nicht  geklappt etwas fehlt")
+                )
+            }
+            );
+        // um nochmal fetchUserData in app.js zu triggern
 
-        // console.log('test', userId)
-        submitTransactionForm('add', { userId, newTransaction, token })
-        .then((response) => 
-            console.log(response)
-        );
 
         // if (response.message === "Success") 
         // const temporaryUserData = props.user
@@ -47,12 +68,8 @@ const AddTransaction = (props) => {
         // console.log(temporaryUserData)
         // props.changeUserData(temporaryUserData)
         // console.log(props.user)
-
-        return
     }
     //Backend-Logik spuckt eine response aus
-
-
     return (
         <div>
             <Header title={""} />
@@ -67,7 +84,7 @@ const AddTransaction = (props) => {
                         <option value="Wohnung">Wohnung</option>
                         <option value="Restaurant">Restaurant</option>
                         <option value="Sparen">Sparen</option>
-                        <option value="Sonstiges">Sontiges</option>
+                        <option value="Sonstiges">Sonstiges</option>
                     </select>
                     <input type="text" className="buttonBase transactionInput" placeholder="Beschreibung" className="buttonBase transactionInput" onChange={e => setBeschreibung(e.target.value)} />
                     <input type="number" className="buttonBase transactionInput" placeholder="Geldbetrag" className="buttonBase transactionInput" onChange={e => setGeldbetrag(e.target.value)} />
@@ -75,6 +92,15 @@ const AddTransaction = (props) => {
                     <input type="submit" className="buttonBase " value="Abschicken" onClick={sendTransactionForm} />
                 </form>
             </div>
+            <SuccsessAddTran
+                category={kategorie}
+                amount={geldbetrag}
+                date={datum.toString().slice(0, 10)}
+                time={datum.toString().slice(11, 16)}
+                className={close ? 'closeSuccsess' : 'SuccsessAddTran'}
+                close={close}
+                setClose={setClose}
+            />
         </div>
 
     )

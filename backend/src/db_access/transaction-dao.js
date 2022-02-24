@@ -4,57 +4,44 @@ const { ObjectId } = require('mongodb')
 
 const addNewTransaction = async (id, transactionObject) => {
 
-    // try {
     const db = await getDb()     // Datenbank verbindung aufrechnen
-    // }
-    // catch {
-    //     (error) => {
-    //         console.log('error by accesing database', error)
-    //     }
-    // }
     // schmeißen neue Transaktion Object in selected User
     const dbResponse = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $push: { transactions: transactionObject } })
 
     // console.log(dbResponse)
 
-    const amount = transactionObject.amount
-    await db.collection('user').updateOne({ _id: id }, { $inc: { sumEASS: amount } })
-    // neue EASS und sumEASSS Stand berechnen
+    const unchangedAmount = Number(transactionObject.amount)
+    await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: unchangedAmount } })
+
+    // neue EASS Stand berechnen
     let responseAusgebenDB;
     let responseSumEASS_DB;
-    console.log(transactionObject.category)
+    const positiveAmount = Math.abs(unchangedAmount)
     switch (transactionObject.category) {
         case "Einkommen":
-            await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Einkommen": amount } })
-            await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+            await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Einkommen": positiveAmount } })
             break;
         case "Lebensmittel":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": amount } })
-            responseSumEASS_DB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": positiveAmount } })
             break;
         case "Shopping":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": amount } })
-            responseSumEASS_DB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": positiveAmount } })
             break;
         case "Wohnung":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Wohnung": amount } })
-            responseSumEASS_DB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": positiveAmount } })
             break;
         case "Restaurant":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Restaurant": amount } })
-            responseSumEASS_DB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": positiveAmount } })
             break;
-        case "Shopping":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Ausgeben": amount } })
-            responseSumEASS_DB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+        case "Sparen":
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Sparen": positiveAmount } })
             break;
         case "Sontiges":
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Sontiges": amount } })
-            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: amount } })
+            responseAusgebenDB = await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { "EASS.Sontiges": positiveAmount } })
             break;
 
         default:
-            throw new Error('add new transation failed')
+            throw new Error('add new transaction failed')
             break;
     }
     // console.log(dbResponse,responseAusgebenDB,responseSumEASS_DB)

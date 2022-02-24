@@ -11,7 +11,7 @@ const registerUserService = async (userData) => {
     if (!dbResponse.acknowledged) {
         throw new Error("Es ist ein Fehler in der Datenbank aufgetreten. Bitte versuche es erneut.")
     }
-    //sendMail(userData.authCode, userData.email)
+    sendMail(userData.authCode, userData.email)
     return dbResponse
 }
 

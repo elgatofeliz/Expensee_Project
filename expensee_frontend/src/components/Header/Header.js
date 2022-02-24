@@ -1,10 +1,19 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { useCookies } from 'react-cookie';
+
 const Header = (props) => {
     const [sidebar, setSidebar] = useState(false)
     const toggleSidebar = () => setSidebar(!sidebar)
     let history = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies("Token");
+
+    const logout = () => {
+        removeCookie("Token")
+        history("/welcome")
+    }
+
     return (
         <header className="Header">
             <nav className="headerNav">
@@ -32,10 +41,8 @@ const Header = (props) => {
                             Transactions
                         </Link>
                     </li>
-                    <li>
-                        <Link to="/">
-                            Logout
-                        </Link>
+                    <li onClick={logout}>
+                        Logout
                     </li>
                 </ul>
                 <img src="img/wavy.png" alt="" />

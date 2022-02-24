@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { submitUserForm } from '../../api/postUserApi.js'
 import { useCookies } from 'react-cookie';
-const { submitForm } = require("../../api/postUserApi.js")
+import { isAuthenticated } from "../../api/isAuthenticated.js"
 
 // props.changeUserData
 const Login = (props) => {
-    console.log(props)
+    // console.log(props)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [response, setResponse] = useState("")
@@ -14,10 +14,15 @@ const Login = (props) => {
     const [authResponse, setAuthResponse] = useState("")
 
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
-
+    console.log(cookies)
     const [loginToken, setLoginToken] = useState(true)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        isAuthenticated()
+            .then((res) => console.log(res))
+    }, [])
 
     async function requestLogin(event) {
         event.preventDefault()
@@ -36,13 +41,16 @@ const Login = (props) => {
         }
 
         const backendResponse = await submitUserForm("login", userData) // Das ist der weg raus aus dem Frontend
-        console.log(backendResponse)
+        console.log("Frontend:", backendResponse)
         if (!backendResponse.token) {
             setLoginToken(backendResponse.token)
             return
         }
         setCookie("Token", backendResponse.token)
-        navigate("/chart")
+        // props.setIsUserLoggedIn(props.isUserLoggedIn + 1)
+        // props.setAuthenticated(true)
+        // props.setAwaitResponse(true)
+        setTimeout(() => { return navigate("/chart") }, 3000)
         return
     }
 
@@ -56,8 +64,10 @@ const Login = (props) => {
         const response = await submitUserForm("authenticate", data)
 
         setResponse(response.message)
+        console.log(response.token)
 
         if (response.status === 200) {
+            setCookie("Token", response.token)
             setTimeout(() => { return navigate("/chart") }, 5000)
         }
         return

@@ -46,6 +46,9 @@
           padding:5vh 0 0 2vw;
           li{
               padding:2vh 0;
+              &:hover{
+                cursor: pointer;
+              }
           }
       }
       img:nth-of-type(2){
