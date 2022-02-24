@@ -24,7 +24,7 @@ async function loginUserService({ email, password }) {
     console.log("user is Authenticated")
 
     const token = generateToken(foundUser)
-    return { token: token }
+    return token
 }
 
 module.exports = { loginUserService }

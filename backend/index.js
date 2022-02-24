@@ -51,7 +51,7 @@ app.get("/user/authenticationCheck", ((req, res) => {
 
 app.get("/allUserData", ((req, res) => {
     console.log("allUserData ROUTE")
-    console.log(req.cookies.Token)
+    console.log(req.cookies)
     if (!req.cookies.Token) {
         res.send({ message: "kein Token" })
         return
@@ -152,9 +152,6 @@ app.post("/user/login", ((req, res) => {
         .catch((err) => {
             console.log("err on login:", err)
             res.send({ message: err.message })
-            // const errorMessage = err
-            // res.send(errorMessage)
-            // res.send({ message: 'Bitte versuche es noch einmal!' })
         })
 }))
 

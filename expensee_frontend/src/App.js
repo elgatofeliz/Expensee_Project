@@ -99,7 +99,7 @@ function App() {
             setAwaitResponse={setAwaitResponse}
           />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addtransaction" element={<AddTransaction setNewTransaction={setNewTransaction} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} user={loggedUserData} token={token} />} />
+          <Route path="/addtransaction" element={<AddTransaction newTransaction={newTransaction} setNewTransaction={setNewTransaction} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} changeUserData={setLoggedUserData} user={loggedUserData} token={token} />} />
           <Route path="/chart" element={<Chart setAuthenticated={setAuthenticated} setAwaitResponse={setAwaitResponse} user={loggedUserData} setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} />} />
           <Route path="/transactions" element={<Transactions setTitle={setTitle} setTitleChart={setTitleChart} setTitleTrans={setTitleTrans} user={loggedUserData} changeUserData={setLoggedUserData} />} />
           <Route path="*" element={<Error />} />

@@ -77,7 +77,8 @@ const Login = (props) => {
 
         if (response.status === 200) {
             setCookie("Token", response.token)
-            setTimeout(() => { return navigate("/chart") }, 5000)
+            props.setAuthenticated(true)
+            setTimeout(() => { return navigate("/chart") }, 3000)
         }
         return
     }

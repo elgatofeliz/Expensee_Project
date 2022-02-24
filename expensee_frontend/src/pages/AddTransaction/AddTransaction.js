@@ -47,7 +47,9 @@ const AddTransaction = (props) => {
                 if (response.status === "acknowledged") {
                     setClose(true)
                     console.log("Hat geklappt hier sind die daten")
-                    props.setNewTransaction(newTransaction + 1)
+                    props.setNewTransaction((state) => {
+                        return state + 1
+                    })
                 } else (
                     console.log("Hat nicht  geklappt etwas fehlt")
                 )
