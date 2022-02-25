@@ -45,6 +45,7 @@ const Chart = (props) => {
                             i.category !== "Shopping" &&
                             i.category !== "Wohnung" &&
                             i.category !== "Sparen" &&
+                            i.category !== "Restaurant" &&
                             i.category !== "Einkommen"
                         )}
                         amount={props.user.EASS.Sonstiges} />

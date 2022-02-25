@@ -24,7 +24,7 @@
     //filter:drop-shadow(0 1mm 4mm rgb(30, 30, 30));
     padding: 15vh 0 0 0 ;
   margin: 10vh 0vw 0 0vw;
-    height: 28vh;
+    height: 23vh;
     
 }
 .succsessMain{
@@ -32,8 +32,8 @@
      background-size: contain;
      background-position: center;
     //padding: 5vh 0 0 0 ;
-    margin: 0 0vw 0 0vw;
-      height: 42.4vh;
+    margin: -1px 0vw 0 0vw;
+      height: 34.8vh;
 //     background: #2B2D5B;
 //  width: 20vw;
 //  margin: 0 0 0 3.9vw;
@@ -51,43 +51,16 @@ div{
   align-items:flex-start;
 }
 .kategorieSumme{
-  padding:3vh 3.5vw;
+  padding:3vh 13vw;
   p{
     text-align:left;
   }
 }
 }
 button{
-  margin: 0 0 0 10vw;
-  padding: 1vh 3vw;
+  margin: 0 0 0 40vw;
+  padding: 1vh 6vw;
   background: rgba(43, 45, 91, 1);
   border-radius: 25px;
 }
 }
-@media screen and (max-width: 393px){
-
-  .succsessHeader{
-    border: 12px solid red;
-    padding: 15vh 0 0 0 ;
-  margin: 10vh 0vw 0 0vw;
-    height: 23vh;
-    
-}
-  .succsessMain{
-
-   padding: 5vh 0 0 0 ;
-   margin: -15px 0vw 0 0vw;
-     height: 35vh;
-  }
-
-
-  .kategorieSumme{
-    padding:3vh 13.5vw;
-
-  }
-  button{
-    margin: 0 0 0 10vw;
-    padding: 1vh 10vw;
-
-  }
-} 

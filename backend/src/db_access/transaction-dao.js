@@ -10,13 +10,16 @@ const addNewTransaction = async (id, transactionObject) => {
 
     // console.log(dbResponse)
 
-    const unchangedAmount = Number(transactionObject.amount)
+    let unchangedAmount = Number(transactionObject.amount)
+    if (transactionObject.category === 'Sparen') {
+        unchangedAmount = unchangedAmount * -1
+    }
     await db.collection('user').updateOne({ _id: ObjectId(id) }, { $inc: { sumEASS: unchangedAmount } })
 
     // neue EASS Stand berechnen
     let responseAusgebenDB;
     let responseSumEASS_DB;
-    const positiveAmount = Math.abs(unchangedAmount)
+    const positiveAmount = Math.abs(Number(transactionObject.amount))
     // console.log(unchangedAmount)
     // console.log(positiveAmount)
     switch (transactionObject.category) {

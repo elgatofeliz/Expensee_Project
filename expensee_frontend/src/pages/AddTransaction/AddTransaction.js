@@ -22,48 +22,39 @@ const AddTransaction = (props) => {
     const sendTransactionForm = (e) => {
         e.preventDefault();
         let tempAmount;
-        if (kategorie !== "Einkommen" && kategorie !== "Sparen") {
-            tempAmount = geldbetrag * -1
-        }
-        else {
-            tempAmount = geldbetrag
-        }
-
-        const userId = props.user._id
-        console.log(userId)
-        // const userId = "6213731588351006f85c4b3b";
-        const transactionId = props.user.transactions.length
-        const newTransaction = {
-            transactionId,
-            category: kategorie,
-            description: beschreibung,
-            amount: tempAmount,
-            date: datum
-        }
-        console.log('new Transactions', newTransaction)
-        submitTransactionForm('add', { userId, newTransaction })
-            .then((response) => {
-                console.log(response.status)
-                if (response.status === "acknowledged") {
-                    setClose(true)
-                    console.log("Hat geklappt hier sind die daten")
-                    props.setNewTransaction((state) => {
-                        return state + 1
-                    })
-                } else (
-                    console.log("Hat nicht  geklappt etwas fehlt")
-                )
+        if (kategorie && beschreibung && geldbetrag) {
+            if (kategorie !== "Einkommen" && kategorie !== "Sparen") {
+                tempAmount = geldbetrag * -1
             }
-            );
-        // um nochmal fetchUserData in app.js zu triggern
-
-
-        // if (response.message === "Success") 
-        // const temporaryUserData = props.user
-        // temporaryUserData.transactions.push(newTransaction)
-        // console.log(temporaryUserData)
-        // props.changeUserData(temporaryUserData)
-        // console.log(props.user)
+            else {
+                tempAmount = geldbetrag
+            }
+            const userId = props.user._id
+            console.log(userId)
+            const transactionId = props.user.transactions.length
+            const newTransaction = {
+                transactionId,
+                category: kategorie,
+                description: beschreibung,
+                amount: tempAmount,
+                date: datum
+            }
+            console.log('new Transactions', newTransaction)
+            submitTransactionForm('add', { userId, newTransaction })
+                .then((response) => {
+                    console.log(response.status)
+                    if (response.status === "acknowledged") {
+                        setClose(true)
+                        console.log("Hat geklappt hier sind die daten")
+                        props.setNewTransaction((state) => {         // um nochmal fetchUserData in app.js zu triggern
+                            return state + 1
+                        })
+                    } else (
+                        console.log("Hat nicht  geklappt etwas fehlt")
+                    )
+                }
+                );
+        }
     }
     //Backend-Logik spuckt eine response aus
     return (
@@ -72,7 +63,7 @@ const AddTransaction = (props) => {
             <div className="AddTransaction">
                 <h2>Umsätze</h2>
                 <form action="">
-                    <select name="Kategorie" id="" className="buttonBase transactionInput" onChange={e => setKategorie(e.target.value)}>
+                    <select required name="Kategorie" id="" className="buttonBase transactionInput" onChange={e => setKategorie(e.target.value)}>
                         <option value="" disabled selected hidden>Kategorie</option>
                         <option value="Einkommen">Einkommen</option>
                         <option value="Lebensmittel">Lebensmittel</option>
@@ -82,8 +73,8 @@ const AddTransaction = (props) => {
                         <option value="Sparen">Sparen</option>
                         <option value="Sonstiges">Sonstiges</option>
                     </select>
-                    <input type="text" className="buttonBase transactionInput" placeholder="Beschreibung" className="buttonBase transactionInput" onChange={e => setBeschreibung(e.target.value)} />
-                    <input type="number" className="buttonBase transactionInput" placeholder="Geldbetrag" className="buttonBase transactionInput" onChange={e => setGeldbetrag(e.target.value)} />
+                    <input type="text" required className="buttonBase transactionInput" placeholder="Beschreibung" className="buttonBase transactionInput" onChange={e => setBeschreibung(e.target.value)} />
+                    <input type="number" required className="buttonBase transactionInput" placeholder="Geldbetrag" className="buttonBase transactionInput" onChange={e => setGeldbetrag(e.target.value)} />
                     <input type="datetime-local" defaultValue={temp} className="buttonBase transactionInput" placeholder="Datum" className="buttonBase transactionInput" onChange={e => setDatum(e.target.value)} />
                     <input type="submit" className="buttonBase " value="Abschicken" onClick={sendTransactionForm} />
                 </form>

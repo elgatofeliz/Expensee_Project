@@ -25,7 +25,7 @@ const Transactions = (props) => {
         }
     }
     const loadMore = () => {
-        setNumberOfTransactions(numberOfTransactions + 7)
+        setNumberOfTransactions(numberOfTransactions + 6)
     }
     return (
         <div>
@@ -46,7 +46,9 @@ const Transactions = (props) => {
                         category={i.category}
                     />)}
                 </div>
-                <button className="mehr buttonBase" onClick={loadMore}>MEHR TRANSAKTIONEN</button>
+                <button className="mehr buttonBase" onClick={loadMore}>
+                    MEHR TRANSAKTIONEN
+                </button>
             </div>
         </div>
     )
